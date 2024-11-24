@@ -1,2 +1,2 @@
 # SistControlCalidad
-git clone https://github.com/tu_usuario/tu_repositorio.git
+git clone https://github.com/AlvarezKevinDaniel/SistControlCalidad.git
