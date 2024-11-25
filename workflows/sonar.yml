@@ -1,39 +1,27 @@
-name: Análisis estático con SonarQube
+name: Build
 
 on:
   push:
     branches:
       - main
-  pull_request:
+
 
 jobs:
-  sonarQube:
+  build:
+    name: Build and analyze
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout del código
-        uses: actions/checkout@v3
-
-      - name: Configurar Java
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
         with:
-          java-version: '17'
-
-      - name: Configurar Sonar Scanner
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@v3
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: |
-          curl -sSLo sonarscanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonarscanner.zip -d $HOME/sonar-scanner
-          echo "export PATH=$HOME/sonar-scanner/sonar-scanner-5.0.1.3006-linux/bin:$PATH" >> $GITHUB_ENV
-
-      - name: Ejecutar Sonar Scanner
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: |
-          sonar-scanner \
-          -Dsonar.projectKey=tu_nombre_proyecto \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
