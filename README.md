@@ -20,7 +20,7 @@ Una calculadora web con funcionalidades básicas como operaciones aritméticas, 
 1. Descarga o clona el repositorio:
    ```bash
    git clone https://github.com/AlvarezKevinDaniel/SistControlCalidad.git
-En caso de no querer descargar todo el repositorio, solo es necesario instalar los archivos calculadora.html y functions.js (si se desea realizar el analisis del programa debe instalar functions.test.js).
+En caso de no querer descargar todo el repositorio, solo es necesario instalar los archivos calculadora.html y functions.js (si se desea realizar el analisis del programa debe instalar functions.test.js y el archivo JSON).
 Luego de descargar los archivos solo es necesario abrir el archivo en un navegador.
 
 ## Uso
