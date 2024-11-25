@@ -9,49 +9,20 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Tests
+  test_and_analyze:
+    name: Run Tests and SonarQube Analysis
     runs-on: ubuntu-latest
 
     steps:
       # Clonar el repositorio
       - uses: actions/checkout@v4
 
-      # Configurar Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      # Instalar dependencias
-      - name: Install dependencies
-        run: npm install
-
-      # Ejecutar pruebas
-      - name: Run tests
-        run: npm test
-
-  sonar:
-    name: SonarQube Analysis
-    runs-on: ubuntu-latest
-    needs: test # Ejecuta este trabajo después de que 'test' finalice exitosamente
-
-    steps:
-      # Clonar el repositorio
-      - uses: actions/checkout@v4
-
-      # Configurar Node.js (si es necesario para análisis JS/TS)
-      - name: Install Node.js
+      # Ejecutar el análisis en un contenedor Docker
+      - name: Run SonarQube in Docker
         run: |
-          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-
-      # Escaneo con SonarQube
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v3
-        with:
-          args: >
-            -Dsonar.projectKey=PruebaCalidad2
-            -Dsonar.sources=.
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          docker run \
+          -e SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
+          -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+          -v ${{ github.workspace }}:/usr/src \
+          sonarsource/sonar-scanner-cli:latest \
+          sonar-scanner -Dsonar.projectKey=PruebaCalidad2 -Dsonar.sources=.
