@@ -12,25 +12,12 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      # 1. Configura el repositorio
+      # Paso 1: Checkout del repositorio
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Instala Node.js (si es necesario para tus pruebas)
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      # 3. Instala dependencias
-      - name: Install dependencies
-        run: npm install
-
-      # 4. Ejecuta las pruebas
-      - name: Run tests
-        run: npm test
-
-      # 5. Análisis estático de código
+      # Paso 2: Análisis estático de código
       - name: Run static code analysis
         run: |
-          npx eslint .  # Sustituye por SonarQube si lo usas
+          echo "Skipping npm install as no package.json is present."
+          npx eslint .
