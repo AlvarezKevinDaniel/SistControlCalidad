@@ -1,9 +1,8 @@
-// Functions for calculator
 let displayValue = '';
+let memoryValue = null; // Variable para la memoria
 
 function appendNumber(number) {
   displayValue += number;
-  //displayValue += number + 'x'; error: Agrega un carácter extra
   return displayValue;
 }
 
@@ -22,12 +21,34 @@ function calculate() {
     if (displayValue.includes('/0')) {
       displayValue = 'Error';
     } else {
-//Error: suma 10 al valor displayValue = (eval(displayValue) + 10).toString();      
-displayValue = eval(displayValue).toString();
+      displayValue = eval(displayValue).toString();
     }
   } catch (e) {
     displayValue = 'Error';
   }
   return displayValue;
 }
-module.exports = { appendNumber, appendOperation, clearDisplay, calculate };
+
+// Nueva función: Elevar al cuadrado
+function square() {
+  try {
+    displayValue = (Math.pow(eval(displayValue), 2)).toString();
+  } catch (e) {
+    displayValue = 'Error';
+  }
+  return displayValue;
+}
+
+// Nueva función: Guardar en memoria
+function saveToMemory() {
+  memoryValue = displayValue;
+  return `Guardado: ${memoryValue}`;
+}
+
+// Nueva función: Recuperar de memoria
+function retrieveFromMemory() {
+  displayValue = memoryValue || '';
+  return displayValue;
+}
+
+module.exports = { appendNumber, appendOperation, clearDisplay, calculate, square, saveToMemory, retrieveFromMemory };
