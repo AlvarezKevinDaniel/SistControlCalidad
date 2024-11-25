@@ -50,8 +50,9 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v3
         with:
-          projectKey: "PruebaCalidad"  # Cambia esto por tu clave de proyecto de SonarQube
-          organization: "tu-organizacion"  # Si tienes una organización en SonarQube, de lo contrario elimina esta línea
+          args: >
+            -Dsonar.projectKey=PruebaCalidad
+            -Dsonar.sources=.
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Asegúrate de haber agregado el token en GitHub Secrets
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  # Asegúrate de haber configurado la URL del servidor de SonarQube en GitHub Secrets
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
