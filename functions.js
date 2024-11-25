@@ -89,3 +89,14 @@ document.getElementById('boton-xml').addEventListener('click', function(){
 
 
 
+// Error de estilo: falta un punto y coma
+const saludo = "Hola mundo"
+
+// Error de sintaxis: función sin nombre
+function () {
+  console.log('Error');
+}
+
+
+
+
