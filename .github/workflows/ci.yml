@@ -40,3 +40,7 @@ jobs:
       run: |
         sudo apt-get install php-cli
         php -l php/
+
+    - name: Install ESLint
+      run: npm install -g eslint
+
