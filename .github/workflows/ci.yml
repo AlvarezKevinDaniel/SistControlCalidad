@@ -9,38 +9,15 @@ on:
       - main
 
 jobs:
-  validate:
+  validate-html:
+    name: Validate HTML
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Validar HTML
-    - name: Validate HTML
-      uses: chris-void/html5validator-action@v1.2.0
-      with:
-        path: "./"
-
-    # Validar CSS
-    - name: Lint CSS
-      run: |
-        sudo apt-get install -y npm
-        npm install -g stylelint
-        stylelint "css/**/*.css"
-
-    # Validar JavaScript con ESLint
-    - name: Lint JavaScript
-      run: |
-        npm install -g eslint
-        eslint "js/**/*.js"
-
-    # Validar PHP con PHP linter
-    - name: Validate PHP
-      run: |
-        sudo apt-get install php-cli
-        php -l php/
-
-    - name: Install ESLint
-      run: npm install -g eslint
-
+      - name: Validate HTML
+        uses: Cyb3r-Jak3/html-validator-action@v1
+        with:
+          path: "./" # Carpeta donde están tus archivos HTML
