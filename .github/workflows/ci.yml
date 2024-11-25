@@ -1,36 +1,42 @@
-# This is a basic workflow to help you get started with Actions
+name: CI for Web Project
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  validate:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    # Validar HTML
+    - name: Validate HTML
+      uses: chris-void/html5validator-action@v1.2.0
+      with:
+        path: "./"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    # Validar CSS
+    - name: Lint CSS
+      run: |
+        sudo apt-get install -y npm
+        npm install -g stylelint
+        stylelint "css/**/*.css"
+
+    # Validar JavaScript con ESLint
+    - name: Lint JavaScript
+      run: |
+        npm install -g eslint
+        eslint "js/**/*.js"
+
+    # Validar PHP con PHP linter
+    - name: Validate PHP
+      run: |
+        sudo apt-get install php-cli
+        php -l php/
