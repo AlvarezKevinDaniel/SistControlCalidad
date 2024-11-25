@@ -4,7 +4,7 @@
   <title>Calculadora Simple</title>
 </head>
 <body>
-  <h2>Calculadora Simple 1.0</h2>
+  <h2>Calculadora Simple 1.1</h2>
   <input type="text" id="display" readonly>
   <br><br>
   <button onclick="updateDisplay(appendNumber('1'))">1</button>
@@ -26,6 +26,11 @@
   <button onclick="updateDisplay(clearDisplay())">C</button>
   <button onclick="updateDisplay(calculate())">=</button>
   <button onclick="updateDisplay(appendOperation('/'))">/</button>
+  <br><br>
+  <!-- Nuevos botones -->
+  <button onclick="updateDisplay(square())">x²</button>
+  <button onclick="updateDisplay(saveToMemory())">Guardar</button>
+  <button onclick="updateDisplay(retrieveFromMemory())">Recuperar</button>
 
   <script src="functions.js"></script>
   <script>
