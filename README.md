@@ -23,3 +23,15 @@ Una calculadora web con funcionalidades básicas como operaciones aritméticas, 
 En caso de no querer descargar todo el repositorio, solo es necesario instalar los archivos calculadora.html y functions.js (si se desea realizar el analisis del programa debe instalar functions.test.js).
 Luego de descargar los archivos solo es necesario abrir el archivo en un navegador.
 
+## Uso
+
+### Funcionalidades Principales
+- **Botones numéricos**: Presiona cualquier número para agregarlo a la operación.
+- **Botones de operación**: Utiliza operadores como `+`, `-`, `*`, `/` para construir la operación matemática.
+- **Cálculo**: Presiona el botón `=` para obtener el resultado de la operación.
+- **Cuadrado**: Presiona el botón `x²` para calcular el cuadrado del valor actual en pantalla.
+- **Borrar**: Usa el botón `C` para limpiar la pantalla.
+- **Guardar en memoria**: Presiona el botón `Guardar` para almacenar el valor actual en memoria.
+- **Recuperar de memoria**: Presiona el botón `Recuperar` para mostrar el valor guardado en memoria.
+
+---
