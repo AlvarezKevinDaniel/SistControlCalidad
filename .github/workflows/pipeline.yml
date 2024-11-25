@@ -31,26 +31,6 @@ jobs:
       - name: Run tests
         run: npm test
 
-  sonar:
-    name: SonarQube Analysis
-    runs-on: ubuntu-latest
-
-    steps:
-      # Paso 1: Clonar el repositorio
-      - uses: actions/checkout@v4
-
-      # Paso 2: Instalar Node.js si estás utilizando un runner auto-hospedado
-      - name: Install Node.js
-        run: |
-          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-
-      # Paso 3: Ejecutar análisis de SonarQube
-      - uses: sonarsource/sonarqube-scan-action@v3
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
 
 
           
