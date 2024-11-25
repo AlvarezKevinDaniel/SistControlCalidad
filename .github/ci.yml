@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Web Project CI
 
 on:
   push:
@@ -9,25 +9,46 @@ on:
       - main
 
 jobs:
-  build:
+  validate:
+    name: Validate Code
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3  # Clona el repositorio
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
+    # Validar HTML
+    - name: Validate HTML
+      uses: chris48s/action-html-proofer@v0.1.0
+      with:
+        directory: "./"  # Ruta del proyecto
 
-      - name: Build with Maven
-        run: mvn clean install
+    # Validar JavaScript (Linting)
+    - name: Validate JavaScript
+      run: |
+        npm install eslint --global
+        eslint ./js/*.js
 
-      - name: Run tests
-        run: mvn test
+    # Validar PHP
+    - name: Validate PHP
+      run: |
+        sudo apt-get install php-cli -y
+        php -l ./php/*.php  # Revisa errores de sintaxis en los archivos PHP
 
-      - name: Analyze code with SonarQube
-        uses: sonarsource/sonarcloud-github-action@master
-        with:
-          sonar-token: ${{ secrets.SONAR_TOKEN }}
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Configurar servidor PHP para pruebas locales
+    - name: Start PHP Server
+      run: |
+        php -S localhost:8000 -t ./  # Inicia un servidor PHP en localhost
+        sleep 5  # Espera a que el servidor esté listo
+
+    # Probar acceso al servidor
+    - name: Test PHP Server
+      run: curl http://localhost:8000/index.php
