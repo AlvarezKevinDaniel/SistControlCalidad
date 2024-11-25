@@ -1,0 +1,39 @@
+name: Análisis estático con SonarQube
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  sonarQube:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Configurar Sonar Scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          curl -sSLo sonarscanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonarscanner.zip -d $HOME/sonar-scanner
+          echo "export PATH=$HOME/sonar-scanner/sonar-scanner-5.0.1.3006-linux/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Ejecutar Sonar Scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          sonar-scanner \
+          -Dsonar.projectKey=tu_nombre_proyecto \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
