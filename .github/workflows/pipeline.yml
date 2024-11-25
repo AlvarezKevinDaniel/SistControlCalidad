@@ -30,7 +30,6 @@ jobs:
       # Paso 4: Ejecutar las pruebas
       - name: Run tests
         run: npm test
-        continue-on-error: true  # Esto permite continuar con el flujo aunque las pruebas fallen
 
   sonar:
     name: SonarQube Analysis
@@ -40,19 +39,18 @@ jobs:
       # Paso 1: Clonar el repositorio
       - uses: actions/checkout@v4
 
-      # Paso 2: Configurar Node.js (ajustar si es necesario, si tu proyecto usa Node.js)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      # Paso 2: Instalar Node.js si estás utilizando un runner auto-hospedado
+      - name: Install Node.js
+        run: |
+          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+          sudo apt-get install -y nodejs
 
-      # Paso 3: Ejecutar el análisis de SonarQube
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v3
-        with:
-          args: >
-            -Dsonar.projectKey=PruebaCalidad
-            -Dsonar.sources=.
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
+      # Paso 3: Ejecutar análisis de SonarQube
+      - uses: sonarsource/sonarqube-scan-action@v3
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+
+          
