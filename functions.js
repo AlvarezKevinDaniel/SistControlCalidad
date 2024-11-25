@@ -87,5 +87,12 @@ document.getElementById('boton-xml').addEventListener('click', function(){
     descargarArchivo(generarXml(datos), 'archivo.xml');
 }, false);
 
+// Error de estilo: falta un punto y coma
+const saludo = "Hola mundo"
+
+// Error de sintaxis: función sin nombre
+function () {
+  console.log('Error');
+}
 
 
