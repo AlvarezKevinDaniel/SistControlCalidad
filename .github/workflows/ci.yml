@@ -17,7 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Validate HTML
-        uses: marc1706/validate-html-action@v1.0.0
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          directory: "./" # Cambia esto si tus archivos HTML están en otra carpeta
+          node-version: 16
+
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
+
+      - name: Run HTML validation
+        run: htmlhint "**/*.html"
