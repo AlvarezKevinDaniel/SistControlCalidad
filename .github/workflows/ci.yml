@@ -16,8 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Paso 2: Análisis estático de código
-      - name: Run static code analysis
-        run: |
-          echo "Skipping npm install as no package.json is present."
-          npx eslint .
+      # Paso 2: Análisis estático de código (opcional)
+      # Si no necesitas ESLint, puedes comentar o eliminar el siguiente paso
+      # - name: Run static code analysis
+      #   run: |
+      #     echo "Skipping npm install as no package.json is present."
+      #     npx eslint .
